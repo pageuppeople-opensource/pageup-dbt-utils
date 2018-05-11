@@ -26,10 +26,10 @@ Arguments:
     {%- set column_name_query = load_result('get_timestamp_column_name') -%}
     {%- if column_name_query -%}
         {%- if column_name_query['data'] and column_name_query['data'][0] -%}
-            {{- test_null_when_parent_column_null(model, 
-                                                  arg, 
-                                                  column_name_query['data'][0][0], 
-                                                  bi_directional=true) -}} 
+            {{- pageup_dbt_utils.test_null_when_parent_column_null(model, 
+                                                                   arg, 
+                                                                   column_name_query['data'][0][0], 
+                                                                   bi_directional=true) -}} 
         {%- else -%}
             {{- log('FAIL: Timestamp column not found for ' ~ model.schema ~ '.' ~ model.table ~ '.' ~ arg, info=True) -}}
             SELECT 1 --fail
