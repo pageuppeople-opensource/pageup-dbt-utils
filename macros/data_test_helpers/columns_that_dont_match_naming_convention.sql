@@ -18,6 +18,6 @@ FROM   column_names
 WHERE LOWER(column_name)                                  = column_name  -- only lowercase
   AND REGEXP_REPLACE(column_name, '[^a-z0-9_]+', '', 'g') = column_name  -- only alphanumerics and underscore
   AND TRIM(BOTH '_' FROM column_name)                     = column_name  -- does not start or end with underscore
-  AND TRIM(LEADING '01234567879' FROM column_name)        = column_name  -- does not start with a number
+  AND TRIM(LEADING '0123456789' FROM column_name)         = column_name  -- does not start with a number
 
 {% endmacro %}

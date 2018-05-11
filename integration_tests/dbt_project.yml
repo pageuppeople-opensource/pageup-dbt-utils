@@ -1,0 +1,27 @@
+
+name: 'pageup_dbt_utils_integration_tests'
+version: '1.0'
+
+profile: 'default'
+
+source-paths: ["test_fixtures"]
+analysis-paths: ["analysis"] 
+test-paths: ["tests"]
+data-paths: ["test_data"]
+macro-paths: ["macros"]
+
+target-path: "target" 
+clean-targets:        
+    - "target"
+    - "dbt_modules"
+
+seeds:
+    pageup_dbt_utils_integration_tests:
+        load:
+            schema: load
+        expectations:
+            schema: expectation
+
+models:
+    pageup_dbt_utils_integration_tests:
+        schema: fixture

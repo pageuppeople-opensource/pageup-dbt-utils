@@ -1,0 +1,4 @@
+fixture_mapped_pivot_color_count_by_size:
+    constraints:
+        dbt_utils.equality: 
+            - ref('expect_mapped_pivot_color_count_by_size')
