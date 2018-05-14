@@ -26,12 +26,9 @@ before_script:
   - psql -c 'CREATE SCHEMA bakeoff_dw;' -U travis
 script:
   - dbt deps --profiles-dir ./.travis/
-  - dbt seed --profiles-dir ./.travis/
-  - dbt run --profiles-dir ./.travis/
-  - dbt test --profiles-dir ./.travis/
-  - ls
+  - dbt compile --profiles-dir ./.travis/
   - cd integration_tests
-  - dbt deps --profiles-dir ../.travis/
-  - dbt seed --profiles-dir ../.travis/
-  - dbt run --profiles-dir ../.travis/
-  - dbt test --profiles-dir ../.travis/
+  - dbt deps --profiles-dir ../.travis/ --target integration_tests
+  - dbt seed --profiles-dir ../.travis/ --target integration_tests
+  - dbt run --profiles-dir ../.travis/ --target integration_tests
+  - dbt test --profiles-dir ../.travis/ --target integration_tests
