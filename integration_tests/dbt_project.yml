@@ -25,3 +25,4 @@ seeds:
 models:
     pageup_dbt_utils_integration_tests:
         schema: fixture
+        materialized: table

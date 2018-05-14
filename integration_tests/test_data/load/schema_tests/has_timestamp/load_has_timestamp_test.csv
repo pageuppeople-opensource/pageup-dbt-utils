@@ -1,0 +1,5 @@
+timestamp_valid,timestamp_valid_id,timestamp_valid_dw_timestamp,invalid_id,invalid_dw_timestamp,invalid2_id,invalid2_dw_timestamp,missing_id
+a,1,2012-01-01,1,2012-01-01,1,2012-01-01,1
+b,2,2012-01-01,2,2012-01-01,2,2012-01-01,2
+c,3,2012-01-01,3,,,2012-01-01,3
+,,,4,2012-01-01,4,2012-01-01,4

@@ -1,0 +1,5 @@
+version_valid,version_valid_id,version_valid_dw_version,invalid_id,invalid_dw_version,invalid2_id,invalid2_dw_version,missing_id
+a,1,2012-01-01,1,2012-01-01,1,2012-01-01,1
+b,2,2012-01-01,2,2012-01-01,2,2012-01-01,2
+c,3,2012-01-01,3,,,2012-01-01,3
+,,,4,2012-01-01,4,2012-01-01,4
