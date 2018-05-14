@@ -4,25 +4,7 @@
 
 default:
   outputs:
-    dev:
-      type: postgres
-      threads: 1
-      host: 127.0.0.1
-      port: 5433
-      user: travis
-      pass: travis
-      dbname: travis
-      schema: dbt_dev
-    prod:
-      type: postgres
-      threads: 1
-      host: 127.0.0.1
-      port: 5433
-      user: travis
-      pass: travis
-      dbname: travis
-      schema: dbt
-    integration_tests:
+    integration_test:
       type: postgres
       threads: 1
       host: 127.0.0.1
@@ -31,4 +13,4 @@ default:
       pass: travis
       dbname: travis
       schema: dbt_test
-  target: dev
+  target: integration_test

@@ -6,7 +6,7 @@ try {
     Write-Warning "Running 'dbt deps' as administrator. Remove this when dbt issue with local dependencies is resolved: https://github.com/fishtown-analytics/dbt/issues/766"
     Write-Host "dbt deps" -ForegroundColor Cyan
     $process = Start-Process powershell -ArgumentList "
-        cd $((Get-Item -Path ".\").FullName);         
+        cd $((Get-Item -Path ".\").FullName);
         dbt deps;
         Exit `$LASTEXITCODE;" -Verb "runAs" -Wait -PassThru
     $process.WaitForExit()
@@ -21,7 +21,7 @@ try {
     }
 
     Write-Host "dbt run --full-refresh" -ForegroundColor Cyan 
-    dbt run  --full-refresh
+    dbt run --full-refresh
     if ($LASTEXITCODE -gt 0) {
         throw "'dbt run' returned exit code $LASTEXITCODE"
     }

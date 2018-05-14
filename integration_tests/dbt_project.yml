@@ -4,10 +4,10 @@ version: '1.0'
 
 profile: 'default'
 
-source-paths: ["test_fixtures"]
+source-paths: ["fixtures"]
 analysis-paths: ["analysis"] 
 test-paths: ["tests"]
-data-paths: ["test_data"]
+data-paths: ["data"]
 macro-paths: ["macros"]
 
 target-path: "target" 
