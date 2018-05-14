@@ -1,3 +1,5 @@
+master: ![travis build status](https://travis-ci.org/PageUpPeopleOrg/pageup-dbt-utils.svg?branch=master)
+
 # pageup-dbt-utils
 Common macros and tests for use in PageUp dbt projects
 
