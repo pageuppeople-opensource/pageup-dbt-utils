@@ -1,0 +1,37 @@
+language:
+  - python
+python:
+  - "3.6"
+services:
+  - postgresql
+addons:
+  postgresql: "10"
+  apt:
+    packages:
+      - postgresql-10
+      - postgresql-client-10
+env:
+  global:
+    - PGPORT=5433
+before_install:
+  - sudo apt-get install -y libpq-dev python-dev
+install:
+  - pip install dbt
+before_script:
+  - psql -c "ALTER USER travis WITH PASSWORD 'travis';"
+  - psql -c 'CREATE EXTENSION citext;' -U travis
+  - psql -c 'CREATE SCHEMA bakeoff;' -U travis
+  - psql -c 'CREATE SCHEMA bakeoff_load;' -U travis
+  - psql -c 'CREATE SCHEMA bakeoff_base;' -U travis
+  - psql -c 'CREATE SCHEMA bakeoff_dw;' -U travis
+script:
+  - dbt deps --profiles-dir ./.travis/
+  - dbt seed --profiles-dir ./.travis/
+  - dbt run --profiles-dir ./.travis/
+  - dbt test --profiles-dir ./.travis/
+  - ls
+  - cd integration_tests
+  - dbt deps --profiles-dir ../.travis/
+  - dbt seed --profiles-dir ../.travis/
+  - dbt run --profiles-dir ../.travis/
+  - dbt test --profiles-dir ../.travis/
