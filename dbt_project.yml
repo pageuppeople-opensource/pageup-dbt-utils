@@ -1,6 +1,6 @@
 
 name: 'pageup_dbt_utils'
-version: '0.1'
+version: '1.1'
 
 profile: 'default'
 

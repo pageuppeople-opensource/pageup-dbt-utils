@@ -19,7 +19,7 @@ Arguments:
         FROM   information_schema.columns
         WHERE  table_schema = '{{model.schema}}'
           AND  table_name   = '{{model.name}}'
-          AND  column_name  = regexp_replace('{{arg}}', '_id$', '') || '_dw_timestamp'
+          AND  column_name  = regexp_replace('{{arg}}', '_id$', '') || '_data_pipeline_timestamp'
 
     {%- endcall -%}
 
