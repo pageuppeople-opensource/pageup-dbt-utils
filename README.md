@@ -6,6 +6,9 @@ Common macros and tests for use in PageUp dbt projects
 Other databases might be supported, but currently support is only guaranteed for:
  - [x] postgres
 
+## Testing
+Execute `run_tests.ps1`
+
 
 ## Troubleshooting
 
