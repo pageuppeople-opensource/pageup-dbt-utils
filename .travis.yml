@@ -20,10 +20,6 @@ install:
 before_script:
   - psql -c "ALTER USER travis WITH PASSWORD 'travis';"
   - psql -c 'CREATE EXTENSION citext;' -U travis
-  - psql -c 'CREATE SCHEMA bakeoff;' -U travis
-  - psql -c 'CREATE SCHEMA bakeoff_load;' -U travis
-  - psql -c 'CREATE SCHEMA bakeoff_base;' -U travis
-  - psql -c 'CREATE SCHEMA bakeoff_dw;' -U travis
 script:
   - dbt deps --profiles-dir ./.travis/
   - dbt compile --profiles-dir ./.travis/
