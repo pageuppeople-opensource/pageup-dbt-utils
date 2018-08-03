@@ -1,10 +1,11 @@
 {#/*
 Test that two models contain identical content, for the specified ID ranges.
+Based on https://github.com/fishtown-analytics/dbt-utils/blob/master/macros/schema_tests/equality.sql
 
 Why would you need this?:
     If you are building a detailed dbt project, you might have seed data to do a series of tests on the models.
     However, to thoroughly test each model they may require a variety of model data to confirm edge cases.
-    If an equality test was use, the test would have to be updated each time a potentially related piece of data was changed, which is impractical.
+    If an equality test was used, the test would have to be updated each time a potentially related piece of data was changed, which is impractical.
     Instead, define a small set of data that is guaranteed to not be modified or treated weirdly for unrelated edge-case tests and test on just that data.
 
 Arguments:
