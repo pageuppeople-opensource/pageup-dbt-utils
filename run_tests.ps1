@@ -1,17 +1,24 @@
+Param([switch] $noDeps)
+
 $ErrorActionPreference = "Stop"
 Push-Location
 cd .\integration_tests
 
 try {
-    Write-Warning "Running 'dbt deps' as administrator. Remove this when dbt issue with local dependencies is resolved: https://github.com/fishtown-analytics/dbt/issues/766"
-    Write-Host "dbt deps" -ForegroundColor Cyan
-    $process = Start-Process powershell -ArgumentList "
-        cd $((Get-Item -Path ".\").FullName);
-        dbt deps;
-        Exit `$LASTEXITCODE;" -Verb "runAs" -Wait -PassThru
-    $process.WaitForExit()
-    if ($process.ExitCode -gt 0) {
-        throw "'dbt deps' returned exit code $($process.ExitCode)"
+    if ($noDeps) {
+        Write-Host "Skipping dbt deps" -ForegroundColor DarkGray
+    } else {
+        Write-Warning "Running 'dbt deps' as administrator. Remove this when dbt issue with local dependencies is resolved: https://github.com/fishtown-analytics/dbt/issues/766"
+        Write-Host "dbt deps" -ForegroundColor Cyan
+        $process = Start-Process powershell -ArgumentList "
+            Write-Host ""dbt deps"" -ForegroundColor Cyan;
+            cd $((Get-Item -Path ".\").FullName);
+            dbt deps;
+            Exit `$LASTEXITCODE;" -Verb "runAs" -Wait -PassThru
+        $process.WaitForExit()
+        if ($process.ExitCode -gt 0) {
+            throw "'dbt deps' returned exit code $($process.ExitCode)"
+        }
     }
 
     Write-Host "dbt seed --full-refresh" -ForegroundColor Cyan 
@@ -21,6 +28,12 @@ try {
     }
 
     Write-Host "dbt run --full-refresh" -ForegroundColor Cyan 
+    dbt run --full-refresh
+    if ($LASTEXITCODE -gt 0) {
+        throw "'dbt run' returned exit code $LASTEXITCODE"
+    }
+    # run again for incrementals
+    Write-Host "dbt run" -ForegroundColor Cyan 
     dbt run --full-refresh
     if ($LASTEXITCODE -gt 0) {
         throw "'dbt run' returned exit code $LASTEXITCODE"

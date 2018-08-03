@@ -1,9 +1,0 @@
-fixture_has_timestamp_test:
-    constraints:
-        pageup_dbt_utils.has_timestamp: 
-            - timestamp_valid
-            - timestamp_valid_id
-        assert_has_timestamp_false:
-            - invalid_id
-            - invalid2_id
-            - missing_id
