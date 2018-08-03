@@ -1,9 +1,0 @@
-fixture_has_version_test:
-    constraints:
-        pageup_dbt_utils.has_version: 
-            - version_valid
-            - version_valid_id
-        assert_has_version_false:
-            - invalid_id
-            - invalid2_id
-            - missing_id

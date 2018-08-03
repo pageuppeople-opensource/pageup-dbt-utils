@@ -1,0 +1,30 @@
+load_equality_for_range_test:
+    constraints:
+        pageup_dbt_utils.equality_for_range: 
+            - {compare_to: ref('expect_equality_for_range_valid'), id_column: id, min: 1, max: 3}
+            - {compare_to: ref('expect_equality_for_range_valid'), id_column: id, min: 0, max: 0}
+            - {compare_to: ref('expect_equality_for_range_valid'), id_column: id, min: 1, max: 5}
+            - {compare_to: ref('expect_equality_for_range_too_many_rows'), id_column: id, min: 1, max: 3}
+            - {compare_to: ref('expect_equality_for_range_not_enough_rows'), id_column: id, min: 2, max: 2}
+        assert_equality_for_range_false: 
+            - {compare_to: ref('expect_equality_for_range_different_data'), id_column: id, min: 1, max: 3}
+            - {compare_to: ref('expect_equality_for_range_too_many_rows'), id_column: id, min: 1, max: 5}
+            - {compare_to: ref('expect_equality_for_range_not_enough_rows'), id_column: id, min: 1, max: 3}
+load_has_timestamp_test:
+    constraints:
+        pageup_dbt_utils.has_timestamp: 
+            - timestamp_valid
+            - timestamp_valid_id
+        assert_has_timestamp_false:
+            - invalid_id
+            - invalid2_id
+            - missing_id
+load_has_version_test:
+    constraints:
+        pageup_dbt_utils.has_version: 
+            - version_valid
+            - version_valid_id
+        assert_has_version_false:
+            - invalid_id
+            - invalid2_id
+            - missing_id
