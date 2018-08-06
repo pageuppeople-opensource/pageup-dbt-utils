@@ -14,6 +14,7 @@ Arguments:
     id_column: the name of the column on both models to check id ranges on
     min: the minimum allowable id value
     max: the maximum allowable id value
+    exclude_timestamp: if true, any column that follows the timestamp naming convention will be excluded from comparison
 */#}
 {% macro test_equality_for_range(model, compare_to, id_column, min, max, exclude_timestamp = false) %}
 
