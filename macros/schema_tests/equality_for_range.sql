@@ -15,9 +15,7 @@ Arguments:
     min: the minimum allowable id value
     max: the maximum allowable id value
 */#}
-{% macro test_equality_for_range(model, compare_to, id_column, min, max) %}
-
-
+{% macro test_equality_for_range(model, compare_to, id_column, min, max, exclude_timestamp = false) %}
 
 -- setup
 
@@ -25,8 +23,13 @@ Arguments:
 {% set model_a_name = model.name %}
 
 {% set dest_columns = adapter.get_columns_in_table(schema, model_a_name) %}
-{% set dest_cols_csv = dest_columns | map(attribute='quoted') | join(', ') %}
 
+{% set dest_columns_filtered = [] %}
+{% for col in dest_columns if not exclude_timestamp or not col.name.endswith('_data_pipeline_timestamp') %}
+  {{ dest_columns_filtered.append(col.quoted) | default('', true) }}
+{% endfor %}
+
+{% set dest_cols_csv = dest_columns_filtered | join(', ') %}
 
 
 -- core SQL
