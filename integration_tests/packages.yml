@@ -1,4 +1,4 @@
 packages:
     - local: ../
     - git: "https://github.com/fishtown-analytics/dbt-utils.git"
-      revision: 0.1.8
+      revision: 0.1.15

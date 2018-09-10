@@ -9,9 +9,9 @@ Example:
 
 Arguments:
     model: table model (not needed when called from schema.yml)
-    arg: The column that should have a matching timestamp
+    column_name: The column that should have a matching timestamp
 */#}
-{% macro test_has_timestamp(model, arg) %}
+{% macro test_has_timestamp(model, column_name) %}
     
     {%- call statement('get_timestamp_column_name', fetch_result=True) -%}
 
@@ -19,7 +19,7 @@ Arguments:
         FROM   information_schema.columns
         WHERE  table_schema = '{{model.schema}}'
           AND  table_name   = '{{model.name}}'
-          AND  column_name  = regexp_replace('{{arg}}', '_id$', '') || '_data_pipeline_timestamp'
+          AND  column_name  = regexp_replace('{{column_name}}', '_id$', '') || '_data_pipeline_timestamp'
 
     {%- endcall -%}
 
@@ -27,11 +27,11 @@ Arguments:
     {%- if column_name_query -%}
         {%- if column_name_query['data'] and column_name_query['data'][0] -%}
             {{- pageup_dbt_utils.test_null_when_parent_column_null(model, 
-                                                                   arg, 
+                                                                   column_name, 
                                                                    column_name_query['data'][0][0], 
                                                                    bi_directional=true) -}} 
         {%- else -%}
-            {{- log('FAIL: Timestamp column not found for ' ~ model.schema ~ '.' ~ model.table ~ '.' ~ arg, info=True) -}}
+            {{- log('FAIL: Timestamp column not found for ' ~ model.schema ~ '.' ~ model.table ~ '.' ~ column_name, info=True) -}}
             SELECT 1 --fail
         {% endif -%}
     {% endif -%}

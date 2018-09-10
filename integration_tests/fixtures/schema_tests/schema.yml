@@ -1,43 +1,134 @@
-load_equality_for_range_test:
-    constraints:
-        pageup_dbt_utils.equality_for_range: 
-            - {compare_to: ref('expect_equality_for_range_valid'), id_column: id, min: 1, max: 3}
-            - {compare_to: ref('expect_equality_for_range_valid'), id_column: id, min: 0, max: 0}
-            - {compare_to: ref('expect_equality_for_range_valid'), id_column: id, min: 1, max: 5}
-            - {compare_to: ref('expect_equality_for_range_too_many_rows'), id_column: id, min: 1, max: 3}
-            - {compare_to: ref('expect_equality_for_range_not_enough_rows'), id_column: id, min: 2, max: 2}
-        assert_equality_for_range_false: 
-            - {compare_to: ref('expect_equality_for_range_different_data'), id_column: id, min: 1, max: 3}
-            - {compare_to: ref('expect_equality_for_range_too_many_rows'), id_column: id, min: 1, max: 5}
-            - {compare_to: ref('expect_equality_for_range_not_enough_rows'), id_column: id, min: 1, max: 3}
-load_equality_for_range_with_timestamp_test:
-    constraints:
-        pageup_dbt_utils.equality_for_range: 
-            - {compare_to: ref('expect_equality_for_range_valid'), id_column: id, min: 1, max: 3, exclude_timestamp: true}
-            - {compare_to: ref('expect_equality_for_range_valid'), id_column: id, min: 0, max: 0, exclude_timestamp: true}
-            - {compare_to: ref('expect_equality_for_range_valid'), id_column: id, min: 1, max: 5, exclude_timestamp: true}
-            - {compare_to: ref('expect_equality_for_range_valid_with_timestamp'), id_column: id, min: 1, max: 3, exclude_timestamp: false}
-            - {compare_to: ref('expect_equality_for_range_too_many_rows'), id_column: id, min: 1, max: 3, exclude_timestamp: true}
-            - {compare_to: ref('expect_equality_for_range_not_enough_rows'), id_column: id, min: 2, max: 2, exclude_timestamp: true}
-        assert_equality_for_range_false: 
-            - {compare_to: ref('expect_equality_for_range_different_data'), id_column: id, min: 1, max: 3, exclude_timestamp: true}
-            - {compare_to: ref('expect_equality_for_range_too_many_rows'), id_column: id, min: 1, max: 5, exclude_timestamp: true}
-            - {compare_to: ref('expect_equality_for_range_not_enough_rows'), id_column: id, min: 1, max: 3, exclude_timestamp: true}
-load_has_timestamp_test:
-    constraints:
-        pageup_dbt_utils.has_timestamp: 
-            - timestamp_valid
-            - timestamp_valid_id
-        assert_has_timestamp_false:
-            - invalid_id
-            - invalid2_id
-            - missing_id
-load_has_version_test:
-    constraints:
-        pageup_dbt_utils.has_version: 
-            - version_valid
-            - version_valid_id
-        assert_has_version_false:
-            - invalid_id
-            - invalid2_id
-            - missing_id
+version: 2
+models:
+- name: load_equality_for_range_test
+  tests:
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_valid')
+      id_column: id
+      max: 3
+      min: 1
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_valid')
+      id_column: id
+      max: 0
+      min: 0
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_valid')
+      id_column: id
+      max: 5
+      min: 1
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_too_many_rows')
+      id_column: id
+      max: 3
+      min: 1
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_not_enough_rows')
+      id_column: id
+      max: 2
+      min: 2
+  - assert_equality_for_range_false:
+      compare_to: ref('expect_equality_for_range_different_data')
+      id_column: id
+      max: 3
+      min: 1
+  - assert_equality_for_range_false:
+      compare_to: ref('expect_equality_for_range_too_many_rows')
+      id_column: id
+      max: 5
+      min: 1
+  - assert_equality_for_range_false:
+      compare_to: ref('expect_equality_for_range_not_enough_rows')
+      id_column: id
+      max: 3
+      min: 1
+- name: load_equality_for_range_with_timestamp_test
+  tests:
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_valid')
+      exclude_timestamp: true
+      id_column: id
+      max: 3
+      min: 1
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_valid')
+      exclude_timestamp: true
+      id_column: id
+      max: 0
+      min: 0
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_valid')
+      exclude_timestamp: true
+      id_column: id
+      max: 5
+      min: 1
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_valid_with_timestamp')
+      exclude_timestamp: false
+      id_column: id
+      max: 3
+      min: 1
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_too_many_rows')
+      exclude_timestamp: true
+      id_column: id
+      max: 3
+      min: 1
+  - pageup_dbt_utils.equality_for_range:
+      compare_to: ref('expect_equality_for_range_not_enough_rows')
+      exclude_timestamp: true
+      id_column: id
+      max: 2
+      min: 2
+  - assert_equality_for_range_false:
+      compare_to: ref('expect_equality_for_range_different_data')
+      exclude_timestamp: true
+      id_column: id
+      max: 3
+      min: 1
+  - assert_equality_for_range_false:
+      compare_to: ref('expect_equality_for_range_too_many_rows')
+      exclude_timestamp: true
+      id_column: id
+      max: 5
+      min: 1
+  - assert_equality_for_range_false:
+      compare_to: ref('expect_equality_for_range_not_enough_rows')
+      exclude_timestamp: true
+      id_column: id
+      max: 3
+      min: 1
+- name: load_has_timestamp_test
+  columns:
+  - name: invalid2_id
+    tests:
+    - assert_has_timestamp_false
+  - name: invalid_id
+    tests:
+    - assert_has_timestamp_false
+  - name: missing_id
+    tests:
+    - assert_has_timestamp_false
+  - name: timestamp_valid
+    tests:
+    - pageup_dbt_utils.has_timestamp
+  - name: timestamp_valid_id
+    tests:
+    - pageup_dbt_utils.has_timestamp
+- name: load_has_version_test
+  columns:
+  - name: invalid2_id
+    tests:
+    - assert_has_version_false
+  - name: invalid_id
+    tests:
+    - assert_has_version_false
+  - name: missing_id
+    tests:
+    - assert_has_version_false
+  - name: version_valid
+    tests:
+    - pageup_dbt_utils.has_version
+  - name: version_valid_id
+    tests:
+    - pageup_dbt_utils.has_version
