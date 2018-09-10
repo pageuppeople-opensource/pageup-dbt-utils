@@ -1,4 +1,6 @@
-fixture_mapped_pivot_color_count_by_size:
-    constraints:
-        dbt_utils.equality: 
-            - ref('expect_mapped_pivot_color_count_by_size')
+version: 2
+models:
+- name: fixture_mapped_pivot_color_count_by_size
+  tests:
+  - dbt_utils.equality:
+      arg: ref('expect_mapped_pivot_color_count_by_size')
