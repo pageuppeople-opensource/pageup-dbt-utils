@@ -66,6 +66,7 @@ Arguments:
              {{ mapping_key }}   AS pivot_key,
              {{ mapping_value }} AS pivot_value
       FROM   {{ mapping_table }}
+      ORDER BY 2
 
   {% endcall -%}
 
