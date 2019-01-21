@@ -23,6 +23,6 @@ GREATEST(
     {%- endif -%}
     {%- if not loop.last %}, {% endif -%}
   {%- endfor -%}
-) AS aggregated_data_pipeline_timestamp
+) {%- if kwargs['exclude_column_name'] != true %} AS aggregated_data_pipeline_timestamp  {% endif -%}
 
 {%- endmacro %}
