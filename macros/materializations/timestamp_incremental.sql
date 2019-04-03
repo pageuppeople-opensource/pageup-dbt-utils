@@ -22,7 +22,7 @@
   {%- set identifier = model['alias'] -%}
   {%- set tmp_identifier = identifier + '__dbt_timestamp_incremental_tmp' -%}
 
-  {%- set old_relation = adapter.get_relation(schema=schema, identifier=identifier) -%}
+  {%- set old_relation = adapter.get_relation(database=database,schema=schema, identifier=identifier) -%}
   {%- set target_relation = api.Relation.create(identifier=identifier, schema=schema, type='table') -%}
   {%- set tmp_relation = api.Relation.create(identifier=tmp_identifier,
                                                  schema=schema, type='table') -%}
