@@ -24,8 +24,7 @@
 
   {%- set old_relation = adapter.get_relation(database=database,schema=schema, identifier=identifier) -%}
   {%- set target_relation = api.Relation.create(identifier=identifier, schema=schema, type='table') -%}
-  {%- set tmp_relation = api.Relation.create(identifier=tmp_identifier,
-                                                 schema=schema, type='table') -%}
+  {%- set tmp_relation = api.Relation.create(identifier=tmp_identifier, schema=schema, type='table') -%}
 
   {%- set non_destructive_mode = (flags.NON_DESTRUCTIVE == True) -%}
   {%- set full_refresh_mode = (flags.FULL_REFRESH == True) -%}
@@ -58,7 +57,7 @@
       {{ create_table_as(False, target_relation, sql) }}
     {%- endcall -%}
   {%- else -%}  
-     {% set dest_columns = adapter.get_columns_in_table(schema, identifier) %}
+     {% set dest_columns = adapter.get_columns_in_relation(target_relation) %}
      {%- call statement() -%}
        {% set tmp_table_sql -%}
          {#/* We are using a subselect instead of a CTE here to allow PostgreSQL to use indexes. */-#}
@@ -80,8 +79,7 @@
 
      {%- endcall -%}
 
-     {{ adapter.expand_target_column_types(temp_table=tmp_identifier,
-                                           Relation=identifier) }}
+     {{ adapter.expand_target_column_types(temp_table=tmp_identifier, to_relation=target_relation) }}
 
      {%- call statement('main') -%}
        {% set dest_cols_csv = dest_columns | map(attribute='quoted') | join(', ') %}
