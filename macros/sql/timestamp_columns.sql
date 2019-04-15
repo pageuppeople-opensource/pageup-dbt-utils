@@ -4,7 +4,7 @@
     Accepts a params args of tablealias/column names.
     If a table is provided, the column used is 'data_pipeline_timestamp'.
     Example usage:
-    
+
       {{ timestamp_columns('foo', 'bar.column', 'baz') }}
 
     Result:
@@ -17,12 +17,12 @@
 GREATEST(
   {%- for column in varargs -%}
     {%- if column.find('.') == -1 -%}
-      {{ column }}.data_pipeline_timestamp
+      {{ column }}.{{ var("AUDIT_COLUMN_PREFIX", "data_pipeline_") }}timestamp
     {%- else -%}
       {{ column }}
     {%- endif -%}
     {%- if not loop.last %}, {% endif -%}
   {%- endfor -%}
-) {%- if kwargs['exclude_column_name'] != true %} AS aggregated_data_pipeline_timestamp  {% endif -%}
+) {%- if kwargs['exclude_column_name'] != true %} AS aggregated_{{ var("AUDIT_COLUMN_PREFIX", "data_pipeline_") }}timestamp  {% endif -%}
 
 {%- endmacro %}
