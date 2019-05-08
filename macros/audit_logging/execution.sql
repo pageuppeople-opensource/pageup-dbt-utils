@@ -56,5 +56,5 @@
         {{dbt_utils.current_timestamp_in_utc()}},
         'completed'
         )
-    WHERE execution_id='{{ invocation_id }}'::uuid,
+    WHERE execution_id='{{ invocation_id }}'::uuid
 {% endmacro %}
