@@ -19,10 +19,10 @@ models: {}
 
 on-run-start:
   - "{{ pageup_dbt_utils.create_audit_schema() }}"
-  - "{{ pageup_dbt_utils.create_exeuction_table() }}"
-  - "{{ pageup_dbt_utils.create_exeuction_model_table() }}"
-  - "{{ pageup_dbt_utils.log_exeuction_start_event() }}"
+  - "{{ pageup_dbt_utils.create_execution_log_table() }}"
+  - "{{ pageup_dbt_utils.create_execution_model_log_table() }}"
+  - "{{ pageup_dbt_utils.log_execution_start_event() }}"
 
 
 on-run-end:
-  - "{{ pageup_dbt_utils.log_exeuction_end_event() }}"
+  - "{{ pageup_dbt_utils.log_execution_end_event() }}"
