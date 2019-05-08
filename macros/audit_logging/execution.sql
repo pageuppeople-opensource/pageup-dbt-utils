@@ -32,7 +32,7 @@
     create table if not exists {{ pageup_dbt_utils.get_execution_relation() }}
     (
         execution_id        uuid PRIMARY KEY NOT NULL,
-        created_on          {{dbt_utils.type_timestamp()}} DEFAULT current_timestamp,
+        created_on          {{dbt_utils.type_timestamp()}} NOT NULL DEFAULT current_timestamp,
         last_updated_on     {{dbt_utils.type_timestamp()}} NOT NULL,
         is_full_refresh     boolean NOT NULL,
         status              varchar(512) NOT NULL
