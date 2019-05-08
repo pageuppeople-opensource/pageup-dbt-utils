@@ -10,18 +10,17 @@
 
 
 {% macro log_execution_event(status) %}
-
     insert into {{ pageup_dbt_utils.get_execution_relation() }} (
         execution_id,
         last_updated_on,
         is_full_refresh,
-        status,
+        status
         )
 
     values (
-        '{{ invocation_id }}',
+        {{ invocation_id }},
         {{dbt_utils.current_timestamp_in_utc()}},
-        '{{ flags.FULL_REFRESH }}',
+        {{ flags.FULL_REFRESH }},
         '{{ status }}'
         )
 
