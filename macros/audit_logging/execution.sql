@@ -18,7 +18,7 @@
         )
 
     values (
-        {{ invocation_id }},
+        '{{ invocation_id }}'::uuid,
         {{dbt_utils.current_timestamp_in_utc()}},
         {{ flags.FULL_REFRESH }},
         '{{ status }}'
