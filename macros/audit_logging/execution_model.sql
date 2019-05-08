@@ -10,7 +10,7 @@
 
 {% macro log_execution_model_event(status, schema_name, model_name) %}
 
-    insert into {{ logging.get_execution_model_relation() }} (
+    insert into {{ pageup_dbt_utils.get_execution_model_relation() }} (
         execution_id,
         last_updated_on,
         status,
@@ -33,7 +33,7 @@
 
 {% macro create_execution_model_log_table() %}
 
-    create table if not exists {{ logging.get_execution_model_relation() }}
+    create table if not exists {{ pageup_dbt_utils.get_execution_model_relation() }}
     (
         execution_model_id  uuid PRIMARY KEY NOT NULL DEFAULT uuid_generate_v1(),
         created_on          {{dbt_utils.type_timestamp()}} NOT NULL DEFAULT current_timestamp,
@@ -47,14 +47,14 @@
 {% endmacro %}
 
 {% macro log_model_start_event() %}
-    {{logging.log_execution_model_event(
+    {{pageup_dbt_utils.log_execution_model_event(
         'started', this.schema, this.name
         )}}
 {% endmacro %}
 
 
 {% macro log_model_end_event() %}
-    {{logging.log_execution_model_event(
+    {{pageup_dbt_utils.log_execution_model_event(
         'completed', this.schema, this.name
         )}}
 {% endmacro %}

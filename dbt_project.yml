@@ -25,4 +25,4 @@ on-run-start:
 
 
 on-run-end:
-  - "{{ logging.log_exeuction_end_event() }}"
+  - "{{ pageup_dbt_utils.log_exeuction_end_event() }}"

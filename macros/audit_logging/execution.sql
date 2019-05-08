@@ -11,7 +11,7 @@
 
 {% macro log_execution_event(status) %}
 
-    insert into {{ logging.get_execution_relation() }} (
+    insert into {{ pageup_dbt_utils.get_execution_relation() }} (
         execution_id,
         last_updated_on,
         is_full_refresh,
@@ -30,7 +30,7 @@
 
 {% macro create_execution_log_table() %}
 
-    create table if not exists {{ logging.get_execution_relation() }}
+    create table if not exists {{ pageup_dbt_utils.get_execution_relation() }}
     (
         execution_id        uuid PRIMARY KEY NOT NULL,
         created_on          {{dbt_utils.type_timestamp()}} DEFAULT current_timestamp,
@@ -43,10 +43,10 @@
 
 
 {% macro log_exeuction_start_event() %}
-    {{logging.log_execution_event('started')}}
+    {{pageup_dbt_utils.log_execution_event('started')}}
 {% endmacro %}
 
 
 {% macro log_exeuction_end_event() %}
-    {{logging.log_execution_event('completed')}}; commit;
+    {{pageup_dbt_utils.log_execution_event('completed')}}; commit;
 {% endmacro %}
