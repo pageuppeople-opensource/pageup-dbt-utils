@@ -14,8 +14,6 @@
         execution_id,
         last_updated_on,
         status,
-
-
         model_schema,
         model_name
         )

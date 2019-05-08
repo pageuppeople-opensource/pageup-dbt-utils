@@ -42,11 +42,11 @@
 {% endmacro %}
 
 
-{% macro log_exeuction_start_event() %}
+{% macro log_execution_start_event() %}
     {{pageup_dbt_utils.log_execution_event('started')}}
 {% endmacro %}
 
 
-{% macro log_exeuction_end_event() %}
+{% macro log_execution_end_event() %}
     {{pageup_dbt_utils.log_execution_event('completed')}}; commit;
 {% endmacro %}
