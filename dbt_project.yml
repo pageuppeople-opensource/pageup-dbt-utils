@@ -5,7 +5,7 @@ version: '0.1'
 profile: 'default'
 
 source-paths: ["models"]
-analysis-paths: ["analysis"] 
+analysis-paths: ["analysis"]
 test-paths: ["tests"]
 data-paths: ["data"]
 macro-paths: ["macros"]
@@ -17,3 +17,12 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models: {}
 
+on-run-start:
+  - "{{ pageup_dbt_utils.create_audit_schema() }}"
+  - "{{ pageup_dbt_utils.create_exeuction_table() }}"
+  - "{{ pageup_dbt_utils.create_exeuction_model_table() }}"
+  - "{{ pageup_dbt_utils.log_exeuction_start_event() }}"
+
+
+on-run-end:
+  - "{{ logging.log_exeuction_end_event() }}"
