@@ -16,13 +16,3 @@ clean-targets:         # directories to be removed by `dbt clean`
     - "dbt_modules"
 
 models: {}
-
-on-run-start:
-  - "{{ pageup_dbt_utils.create_audit_schema() }}"
-  - "{{ pageup_dbt_utils.create_execution_log_table() }}"
-  - "{{ pageup_dbt_utils.create_execution_model_log_table() }}"
-  - "{{ pageup_dbt_utils.log_execution_start_event() }}"
-
-
-on-run-end:
-  - "{{ pageup_dbt_utils.log_execution_end_event() }}"
