@@ -25,12 +25,12 @@
     values (
         '{{ invocation_id }}'::uuid,
         {{dbt_utils.current_timestamp_in_utc()}},
-        {% if variable != None %}'{{ result.status }}'{% else %} null {% endif %},
+        {% if variable != None %}'{{ result.status }}'{% else %} 'ERROR UNKNOWN' {% endif %},
         '{{ result.node.schema }}',
         '{{ result.node.name  }}',
         {% if result.error != None %}'{{ result.error }}'{% else %} null {% endif %},
-        {% if result.skip != None %}{{ result.skip }}{% else %} null {% endif %},
-        {% if result.fail != None %}{{ result.fail }}{% else %} null {% endif %},
+        {% if result.skip != None %}{{ result.skip }}{% else %} FALSE {% endif %},
+        {% if result.fail != None %}{{ result.fail }}{% else %} FALSE {% endif %},
         '{{ result.execution_time }}'
         )
 
