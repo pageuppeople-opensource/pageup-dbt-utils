@@ -41,7 +41,7 @@
 
     create table if not exists {{ pageup_dbt_utils.get_execution_model_relation() }}
     (
-        execution_model_id  uuid PRIMARY KEY NOT NULL execution_model_id NOT NULL DEFAULT uuid_generate_v1(),
+        execution_model_id  uuid PRIMARY KEY NOT NULL DEFAULT uuid_generate_v1(),
         created_on          {{dbt_utils.type_timestamp()}} NOT NULL DEFAULT current_timestamp,
         execution_id        uuid NOT NULL,
         last_updated_on     {{dbt_utils.type_timestamp()}} NOT NULL,
