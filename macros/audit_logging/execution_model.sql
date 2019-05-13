@@ -28,9 +28,9 @@
         '{{ result.status }}',
         '{{ result.node.schema }}',
         '{{ result.node.table  }}',
-        '{{ result.error }}',
-        '{{ result.skip }}',
-        '{{ result.fail }}',
+        {% if variable != None %}'{{ result.error }}'{% else %} null {% endif %},
+        {% if variable != None %}{{ result.skip }}{% else %} null {% endif %},
+        {% if variable != None %}{{ result.fail }}{% else %} null {% endif %},
         '{{ result.execution_time }}'
         )
 
