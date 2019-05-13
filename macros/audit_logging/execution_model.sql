@@ -51,7 +51,7 @@
         error_message       varchar(1024),
         skipped             boolean NOT NULL DEFAULT FALSE,
         fail                boolean NOT NULL DEFAULT FALSE,
-        execution_time      integer NOT NULL
+        execution_time      float NOT NULL
     )
 
 {% endmacro %}
