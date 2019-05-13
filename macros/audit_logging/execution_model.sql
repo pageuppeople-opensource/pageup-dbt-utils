@@ -24,7 +24,7 @@
         )
 
     values (
-        '{{ res.node.unique_id }}'::uuid,
+        '{{ result.node.unique_id }}'::uuid,
         '{{ invocation_id }}'::uuid,
         {{dbt_utils.current_timestamp_in_utc()}},
         '{{ result.status }}',
