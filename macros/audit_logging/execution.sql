@@ -57,4 +57,7 @@
         'completed'
         )
     WHERE execution_id='{{ invocation_id }}'::uuid
+    {% for result in results -%}
+        {{ pageup_dbt_utils.log_execution_model_event(result) }}
+    {% endfor %}
 {% endmacro %}
