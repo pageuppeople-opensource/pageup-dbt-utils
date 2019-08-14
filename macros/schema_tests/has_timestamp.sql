@@ -1,11 +1,11 @@
 {#/*
 Test that a column has a matching timestamp column that behaves like a timestamp.
-Timestamp column name should be the column name > remove '_id' if exists > add '_data_pipeline_timestamp'.
+Timestamp column name should be the column name > remove '_id' if exists > add '_model_timestamp'.
 Columns and their matching timestamp columns should either both be null or neither be null.
 
 Example:
-    Column 'person_id' should have a matching timestamp column called 'person_data_pipeline_timestamp'
-    Column 'organisation' should have a matching timestamp column called 'organisation_data_pipeline_timestamp'
+    Column 'person_id' should have a matching timestamp column called 'person_model_timestamp'
+    Column 'organisation' should have a matching timestamp column called 'organisation_model_timestamp'
 
 Arguments:
     model: table model (not needed when called from schema.yml)
@@ -19,7 +19,7 @@ Arguments:
         FROM   information_schema.columns
         WHERE  table_schema = '{{model.schema}}'
           AND  table_name   = '{{model.name}}'
-          AND  column_name  = regexp_replace('{{column_name}}', '_id$', '') || '_data_pipeline_timestamp'
+          AND  column_name  = regexp_replace('{{column_name}}', '_id$', '') || '_model_timestamp'
 
     {%- endcall -%}
 

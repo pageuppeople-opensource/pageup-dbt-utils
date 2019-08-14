@@ -14,7 +14,7 @@ Execute `run_tests.ps1`
 
 ### Could not find profile named 'default'
 
-Make sure you have a profile called `default`. You may only have one called `bakeoff`...
+Make sure you have a [profile](https://docs.getdbt.com/docs/configure-your-profile) called `default`. You may only have one called `bakeoff`...
 
 ### Tests: I get the error `symbolic link privilege not held` when calling `dbt deps` on windows
 

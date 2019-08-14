@@ -14,10 +14,7 @@
 
 {% materialization timestamp_incremental, default -%}
   {%- set unique_key = config.require('unique_key') -%}
-  {%- set timestamp_suffix = var('TIMESTAMP_SUFFIX') -%}
-  {%- if timestamp_suffix is none -%}
-    {%- set timestamp_suffix = 'data_pipeline_timestamp' -%}
-  {%- endif -%}
+  {%- set timestamp_suffix = var('TIMESTAMP_SUFFIX', 'model_timestamp') -%}
 
   {%- set identifier = model['alias'] -%}
   {%- set tmp_identifier = identifier + '__dbt_timestamp_incremental_tmp' -%}

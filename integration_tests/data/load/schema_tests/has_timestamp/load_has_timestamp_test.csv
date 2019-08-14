@@ -1,4 +1,4 @@
-timestamp_valid,timestamp_valid_id,timestamp_valid_data_pipeline_timestamp,invalid_id,invalid_data_pipeline_timestamp,invalid2_id,invalid2_data_pipeline_timestamp,missing_id
+timestamp_valid,timestamp_valid_id,timestamp_valid_model_timestamp,invalid_id,invalid_model_timestamp,invalid2_id,invalid2_model_timestamp,missing_id
 a,1,2012-01-01,1,2012-01-01,1,2012-01-01,1
 b,2,2012-01-01,2,2012-01-01,2,2012-01-01,2
 c,3,2012-01-01,3,,,2012-01-01,3
