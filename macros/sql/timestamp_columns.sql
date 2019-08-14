@@ -17,12 +17,12 @@
 GREATEST(
   {%- for column in varargs -%}
     {%- if column.find('.') == -1 -%}
-      {{ column }}.{{ var("AUDIT_COLUMN_PREFIX", "data_pipeline_") }}timestamp
+      {{ column }}.{{ var("TIMESTAMP_SUFFIX", "data_pipeline_timestamp") }}
     {%- else -%}
       {{ column }}
     {%- endif -%}
     {%- if not loop.last %}, {% endif -%}
   {%- endfor -%}
-) {%- if kwargs['exclude_column_name'] != true %} AS aggregated_{{ var("AUDIT_COLUMN_PREFIX", "data_pipeline_") }}timestamp  {% endif -%}
+) {%- if kwargs['exclude_column_name'] != true %} AS aggregated_{{ var("TIMESTAMP_SUFFIX", "data_pipeline_timestamp") }}  {% endif -%}
 
 {%- endmacro %}
