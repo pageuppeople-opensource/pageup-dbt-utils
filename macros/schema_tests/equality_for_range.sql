@@ -26,7 +26,7 @@ Arguments:
 {% set dest_columns = adapter.get_columns_in_table(schema, model_a_name) %}
 
 {% set dest_columns_filtered = [] %}
-{% for col in dest_columns if not exclude_timestamp or not col.name.endswith('_data_pipeline_timestamp') %}
+{% for col in dest_columns if not exclude_timestamp or not col.name.endswith('model_timestamp') %}
   {{ dest_columns_filtered.append(col.quoted) | default('', true) }}
 {% endfor %}
 
