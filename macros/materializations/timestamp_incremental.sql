@@ -14,7 +14,7 @@
 
 {% materialization timestamp_incremental, default -%}
   {%- set unique_key = config.require('unique_key') -%}
-  {%- set timestamp_suffix = config.get('timestamp_suffix') -%}
+  {%- set timestamp_suffix = var('TIMESTAMP_SUFFIX') -%}
   {%- if timestamp_suffix is none -%}
     {%- set timestamp_suffix = '_data_pipeline_timestamp' -%}
   {%- endif -%}
