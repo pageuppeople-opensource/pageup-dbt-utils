@@ -14,3 +14,5 @@ default:
       dbname: travis
       schema: dbt_test
   target: integration_test
+config:
+  send_anonymous_usage_stats: False
