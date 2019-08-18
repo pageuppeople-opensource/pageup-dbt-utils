@@ -58,7 +58,9 @@ Arguments:
                       agg='sum',
                       cmp='=',
                       then_value=1,
-                      else_value=0) %}
+                      else_value=0,
+                      add_update_flag_on_incremental=false,
+                      update_flag_suffix='__is_updated') %}
 
   {%- call statement('get_pivot_mapping', fetch_result=True) %}
 
@@ -79,6 +81,10 @@ Arguments:
             ELSE {{ else_value }}
         END
     ) AS {{ kvp[1] }}
+    {%- if add_update_flag_on_incremental && is_incremental() -%}
+      ,
+      MAX(CASE {{ column }} {{ cmp }} '{{ kvp[0] }}' THEN TRUE ELSE FALSE END) AS {{ kvp[1] }}{{ update_flag_suffix }}
+    {%- endif -%}
     {%- if not loop.last %},{% endif %}
-  {% endfor %}
-{% endmacro %}
+  {% endfor -%}
+{%- endmacro -%}
