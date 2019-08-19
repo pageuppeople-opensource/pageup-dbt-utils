@@ -81,9 +81,12 @@ Arguments:
             ELSE {{ else_value }}
         END
     ) AS {{ kvp[1] }}
-    {%- if add_update_flag_on_incremental && is_incremental() -%}
+    {%- if add_update_flag_on_incremental and is_incremental() -%}
       ,
-      MAX(CASE {{ column }} {{ cmp }} '{{ kvp[0] }}' THEN TRUE ELSE FALSE END) AS {{ kvp[1] }}{{ update_flag_suffix }}
+      CASE
+          WHEN MAX(CASE WHEN {{ column }} {{ cmp }} '{{ kvp[0] }}' THEN 1 ELSE 0 END) = 1 THEN TRUE
+          ELSE FALSE
+      END AS {{ kvp[1] }}{{ update_flag_suffix }}
     {%- endif -%}
     {%- if not loop.last %},{% endif %}
   {% endfor -%}

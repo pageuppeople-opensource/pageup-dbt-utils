@@ -68,8 +68,8 @@ Arguments:
                               else_value='NULL',
                               do_nothing_if_not_incremental=true) %}
 
-  {%- for column in merge_column_names -%}
-    {%- if do_nothing_if_not_incremental && not is_incremental() -%}
+  {%- for column in merge_column_names|sort -%}
+    {%- if do_nothing_if_not_incremental and not is_incremental() -%}
       {{ new_table }}.{{ column }}
     {%- else -%}
       CASE
@@ -77,7 +77,7 @@ Arguments:
           WHEN {{ old_table }}.{{ unique_key }} != NULL THEN {{ old_table }}.{{ column }}
           ELSE {{ else_value }}
       END AS {{ column }}
-    {% endif %}
+    {%- endif -%}
     {%- if not loop.last %},{% endif %}
   {% endfor -%}
 {%- endmacro -%}
