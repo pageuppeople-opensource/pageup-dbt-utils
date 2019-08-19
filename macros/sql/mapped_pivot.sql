@@ -49,6 +49,8 @@ Arguments:
     cmp: SQL value comparison, default is =
     then_value: Value to use if comparison succeeds, default is 1
     else_value: Value to use if comparison fails, default is 0
+    add_update_flag_on_incremental: On incremental runs, include a flag column to identify if a column was updated. Default is false
+    update_flag_suffix: The suffix that is added to identify update flag columns. Default `__is_updated`
 */#}
 
 {% macro mapped_pivot(column,
