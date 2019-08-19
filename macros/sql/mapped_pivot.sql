@@ -49,6 +49,8 @@ Arguments:
     cmp: SQL value comparison, default is =
     then_value: Value to use if comparison succeeds, default is 1
     else_value: Value to use if comparison fails, default is 0
+    add_update_flag_on_incremental: On incremental runs, include a flag column to identify if a column was updated. Default is false
+    update_flag_suffix: The suffix that is added to identify update flag columns. Default `__is_updated`
 */#}
 
 {% macro mapped_pivot(column,
@@ -58,7 +60,9 @@ Arguments:
                       agg='sum',
                       cmp='=',
                       then_value=1,
-                      else_value=0) %}
+                      else_value=0,
+                      add_update_flag_on_incremental=false,
+                      update_flag_suffix='__is_updated') %}
 
   {%- call statement('get_pivot_mapping', fetch_result=True) %}
 
@@ -79,6 +83,13 @@ Arguments:
             ELSE {{ else_value }}
         END
     ) AS {{ kvp[1] }}
+    {%- if add_update_flag_on_incremental and is_incremental() -%}
+      ,
+      CASE
+          WHEN MAX(CASE WHEN {{ column }} {{ cmp }} '{{ kvp[0] }}' THEN 1 ELSE 0 END) = 1 THEN TRUE
+          ELSE FALSE
+      END AS {{ kvp[1] }}{{ update_flag_suffix }}
+    {%- endif -%}
     {%- if not loop.last %},{% endif %}
-  {% endfor %}
-{% endmacro %}
+  {% endfor -%}
+{%- endmacro -%}
