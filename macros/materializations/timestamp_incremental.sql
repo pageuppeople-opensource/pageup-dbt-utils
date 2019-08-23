@@ -76,7 +76,7 @@
 
      {%- endcall -%}
 
-     {{ adapter.expand_target_column_types(temp_table=tmp_identifier, to_relation=target_relation) }}
+     {{ adapter.expand_target_column_types(from_relation=tmp_relation, to_relation=target_relation) }}
 
      {%- call statement('main') -%}
        {% set dest_cols_csv = dest_columns | map(attribute='quoted') | join(', ') %}
