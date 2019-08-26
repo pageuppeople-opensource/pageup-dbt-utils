@@ -48,15 +48,9 @@
 
 {% macro log_execution_end_event() %}
     UPDATE {{ pageup_dbt_utils.get_execution_relation() }}
-    SET (
-        last_updated_on,
-        status
-        )
-    = (
-        {{dbt_utils.current_timestamp_in_utc()}},
-        'completed'
-        )
+    SET last_updated_on={{dbt_utils.current_timestamp_in_utc()}}, status='completed'
     WHERE execution_id='{{ invocation_id }}'::text;
+    
     {% for result in results -%}
         {{ pageup_dbt_utils.log_execution_model_event(result) }};
     {% endfor %}
