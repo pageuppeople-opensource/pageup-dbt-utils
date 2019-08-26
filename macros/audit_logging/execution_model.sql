@@ -24,7 +24,7 @@
         )
 
     values (
-        fn_uuid()::text
+        fn_uuid()::text,
         '{{ invocation_id }}'::text,
         {{dbt_utils.current_timestamp_in_utc()}},
         {% if variable != None %}'{{ result.status }}'{% else %} 'ERROR UNKNOWN' {% endif %},
