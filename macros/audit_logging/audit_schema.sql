@@ -1,3 +1,3 @@
 {% macro create_audit_schema() %}
-    CREATE SCHEMA IF NOT EXISTS dbt;
+    {% do adapter.create_schema(target.database, "dbt") %}
 {% endmacro %}
