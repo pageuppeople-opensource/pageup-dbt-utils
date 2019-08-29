@@ -19,7 +19,7 @@
 
     create table if not exists {{ pageup_dbt_utils.get_execution_relation() }}
     (
-        execution_id        uuid PRIMARY KEY NOT NULL,
+        execution_id        varchar(250) PRIMARY KEY NOT NULL,
         created_on          {{dbt_utils.type_timestamp()}} NOT NULL DEFAULT current_timestamp,
         last_updated_on     {{dbt_utils.type_timestamp()}} NOT NULL,
         is_full_refresh     boolean NOT NULL,
@@ -38,7 +38,7 @@
         )
 
     values (
-        '{{ invocation_id }}'::uuid,
+        '{{ invocation_id }}'::text,
         {{dbt_utils.current_timestamp_in_utc()}},
         {{ flags.FULL_REFRESH }},
         'started'
@@ -48,15 +48,9 @@
 
 {% macro log_execution_end_event() %}
     UPDATE {{ pageup_dbt_utils.get_execution_relation() }}
-    SET (
-        last_updated_on,
-        status
-        )
-    = (
-        {{dbt_utils.current_timestamp_in_utc()}},
-        'completed'
-        )
-    WHERE execution_id='{{ invocation_id }}'::uuid;
+    SET last_updated_on={{dbt_utils.current_timestamp_in_utc()}}, status='completed'
+    WHERE execution_id='{{ invocation_id }}'::text;
+    
     {% for result in results -%}
         {{ pageup_dbt_utils.log_execution_model_event(result) }};
     {% endfor %}

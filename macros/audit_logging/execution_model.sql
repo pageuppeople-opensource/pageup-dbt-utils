@@ -11,6 +11,7 @@
 {% macro log_execution_model_event(result) %}
 
     insert into {{ pageup_dbt_utils.get_execution_model_relation() }} (
+        execution_model_id,
         execution_id,
         last_updated_on,
         status,
@@ -23,7 +24,8 @@
         )
 
     values (
-        '{{ invocation_id }}'::uuid,
+        fn_uuid()::text,
+        '{{ invocation_id }}'::text,
         {{dbt_utils.current_timestamp_in_utc()}},
         {% if variable != None %}'{{ result.status }}'{% else %} 'ERROR UNKNOWN' {% endif %},
         '{{ result.node.schema }}',
@@ -41,9 +43,9 @@
 
     create table if not exists {{ pageup_dbt_utils.get_execution_model_relation() }}
     (
-        execution_model_id  uuid PRIMARY KEY NOT NULL DEFAULT uuid_generate_v1(),
+        execution_model_id  varchar(250) PRIMARY KEY NOT NULL,
         created_on          {{dbt_utils.type_timestamp()}} NOT NULL DEFAULT current_timestamp,
-        execution_id        uuid NOT NULL,
+        execution_id        varchar(250) NOT NULL,
         last_updated_on     {{dbt_utils.type_timestamp()}} NOT NULL,
         status              varchar(512) NOT NULL,
         model_schema        varchar(512) NOT NULL,
