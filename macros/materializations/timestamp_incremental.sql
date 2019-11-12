@@ -43,7 +43,7 @@
   {% else %}
       {% set tmp_relation = make_temp_relation(target_relation) %}
       {# BEGIN MODIFIED CODE #}
-      {% set incremental_sql = build_timestamp_incremental_sql(target_relation, sql) %}
+      {% set incremental_sql = pageup_dbt_utils.build_timestamp_incremental_sql(target_relation, sql) %}
       {% do run_query(create_table_as(True, tmp_relation, incremental_sql)) %}
       {# END MODIFIED CODE #}
       {% do adapter.expand_target_column_types(
