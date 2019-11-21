@@ -28,7 +28,7 @@
         {% if variable != None %}'{{ result.status }}'{% else %} 'ERROR UNKNOWN' {% endif %},
         '{{ result.node.schema }}',
         '{{ result.node.name  }}',
-        {% if result.error != None %}'{{ result.error }}'{% else %} null {% endif %},
+        {% if result.error != None %} '{{ result.error.replace("'","''") }}' {% else %} null {% endif %},
         {% if result.skip != None %}{{ result.skip }}{% else %} FALSE {% endif %},
         {% if result.fail != None %}{{ result.fail }}{% else %} FALSE {% endif %},
         '{{ result.execution_time }}'
