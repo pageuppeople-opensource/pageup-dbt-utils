@@ -2,7 +2,7 @@
 name: 'pageup_dbt_utils'
 version: '3.0.0'
 
-require-dbt-version: ">=0.14.3"
+require-dbt-version: ">=0.15.0"
 
 profile: 'default'
 
