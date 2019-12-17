@@ -7,11 +7,12 @@
         {{ sql }}
     ) as dbt_incr_sbq
 
+    {#- Always include rows when the target_relation is empty, gets around null-is-false logic #}
+    where not exists (select 1 from {{ target_relation }})
     {#- Generate a check for each timestamp column to ensure we only update changed rows -#}
     {#- Note: it doesnt have to be a timestamp, any comparable type will work too, as long as newer rows have a bigger value -#}
     {%- for col in dest_columns if col.name.endswith(timestamp_suffix) %}
-    {% if loop.first %}where {% else %}   or {% endif -%}
-        {{ col.quoted }} > (select max({{ col.quoted }}) from {{ target_relation }})
+       or {{ col.quoted }} > (select max({{ col.quoted }}) from {{ target_relation }})
     {%- endfor %}
 {%- endmacro %}
 
