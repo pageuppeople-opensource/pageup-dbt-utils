@@ -40,7 +40,7 @@
     values (
         '{{ invocation_id }}'::uuid,
         {{dbt_utils.current_timestamp_in_utc()}},
-        {{ flags.should_full_refresh() }},
+        {{ should_full_refresh() }},
         'started'
         )
 {% endmacro %}
