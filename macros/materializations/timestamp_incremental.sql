@@ -18,9 +18,8 @@
 {% materialization timestamp_incremental, default -%}
 
   {% set unique_key = config.get('unique_key') %}
-  {% set full_refresh_mode = flags.FULL_REFRESH %}
 
-  {% set target_relation = this %}
+  {% set target_relation = this.incorporate(type='table') %}
   {% set existing_relation = load_relation(this) %}
   {% set tmp_relation = make_temp_relation(this) %}
 
@@ -32,7 +31,7 @@
   {% set to_drop = [] %}
   {% if existing_relation is none %}
       {% set build_sql = create_table_as(False, target_relation, sql) %}
-  {% elif existing_relation.is_view or full_refresh_mode %}
+  {% elif existing_relation.is_view or should_full_refresh() %}
       {#-- Make sure the backup doesn't exist so we don't encounter issues with the rename below #}
       {% set backup_identifier = existing_relation.identifier ~ "__dbt_backup" %}
       {% set backup_relation = existing_relation.incorporate(path={"identifier": backup_identifier}) %}
@@ -57,6 +56,8 @@
       {{ build_sql }}
   {% endcall %}
 
+  {% do persist_docs(target_relation, model) %}
+  
   {{ run_hooks(post_hooks, inside_transaction=True) }}
 
   -- `COMMIT` happens here
