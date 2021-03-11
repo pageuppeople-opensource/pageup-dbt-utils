@@ -11,7 +11,7 @@
     {#- Note: it doesnt have to be a timestamp, any comparable type will work too, as long as newer rows have a bigger value -#}
     {%- for col in dest_columns if col.name.endswith(timestamp_suffix) %}
     {% if loop.first %}where {% else %}   or {% endif -%}
-        {{ col.quoted }} > (select max({{ col.quoted }}) from {{ target_relation }})
+        ({{ col.quoted }} > (select max({{ col.quoted }}) from {{ target_relation }})) IS NOT FALSE
     {%- endfor %}
 {%- endmacro %}
 
