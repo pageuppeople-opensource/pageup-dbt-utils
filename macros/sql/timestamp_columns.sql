@@ -23,6 +23,6 @@ GREATEST(
     {%- endif -%}
     {%- if not loop.last %}, {% endif -%}
   {%- endfor -%}
-) {%- if kwargs['exclude_column_name'] != true %} AS aggregated_{{ var("TIMESTAMP_SUFFIX", "model_timestamp") }}  {% endif -%}
+) {%- if kwargs['exclude_column_name'] != true %} AS {{ var("TIMESTAMP_SUFFIX", "model_timestamp") }}  {% endif -%}
 
 {%- endmacro %}
