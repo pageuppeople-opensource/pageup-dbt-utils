@@ -10,27 +10,24 @@
 
 {% macro log_execution_model_event(result) %}
 
+    -- v1 run results: https://schemas.getdbt.com/dbt/run-results/v1/index.html#results_items
     insert into {{ pageup_dbt_utils.get_execution_model_relation() }} (
         execution_id,
         last_updated_on,
         status,
         model_schema,
         model_name,
-        error_message,
-        skipped,
-        fail,
+        message,
         execution_time
         )
 
     values (
         '{{ invocation_id }}'::uuid,
         {{dbt_utils.current_timestamp_in_utc()}},
-        {% if variable != None %}'{{ result.status }}'{% else %} 'ERROR UNKNOWN' {% endif %},
+        '{{ result.status }}',
         '{{ result.node.schema }}',
-        '{{ result.node.name  }}',
-        {% if result.error != None %} '{{ result.error.replace("'","''") }}' {% else %} null {% endif %},
-        {% if result.skip != None %}{{ result.skip }}{% else %} FALSE {% endif %},
-        {% if result.fail != None %}{{ result.fail }}{% else %} FALSE {% endif %},
+        '{{ result.node.name }}',
+        '{{ result.message }}',
         '{{ result.execution_time }}'
         )
 
@@ -48,9 +45,7 @@
         status              varchar(512) NOT NULL,
         model_schema        varchar(512) NOT NULL,
         model_name          varchar(512) NOT NULL,
-        error_message       varchar(1024),
-        skipped             boolean NOT NULL DEFAULT FALSE,
-        fail                boolean NOT NULL DEFAULT FALSE,
+        message             varchar(1024),
         execution_time      float NOT NULL
     )
 
